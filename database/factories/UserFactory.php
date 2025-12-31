@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\SystemColor;
+use App\Models\User;
+use App\Models\UserColor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -40,5 +43,26 @@ class UserFactory extends Factory
         }
 
         return $data;
+    }
+
+    /**
+     * Configure the model factory.
+     */
+    public function configure(): static
+    {
+        return $this->afterCreating(function (User $user): void {
+            $systemColors = SystemColor::all();
+
+            foreach ($systemColors as $systemColor) {
+                $name = str_replace('-system', '-user', $systemColor->getName());
+
+                UserColor::create([
+                    'user_id' => $user->getId(),
+                    'name' => $name,
+                    'value' => $systemColor->getValue(),
+                    'new' => false,
+                ]);
+            }
+        });
     }
 }
