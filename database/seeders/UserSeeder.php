@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -58,8 +59,12 @@ class UserSeeder extends Seeder
             'password' => Hash::make('test_user123'),
         ]);
 
+        Cache::put('skip_colors', true, 60);
+
         $count = (env('APP_ENV') === 'production') ? 400 : 200;
 
         User::factory($count)->create();
+
+        Cache::forget('skip_colors');
     }
 }
