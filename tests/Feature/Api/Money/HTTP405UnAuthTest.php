@@ -15,63 +15,82 @@ beforeEach(function (): void {
 });
 
 describe('405 > Unauthorized', function (): void {
-    test('put > index api', function (): void {
-        $this->put(route('money.index', 1))
-            ->assertStatus(405);
-    });
-
-    test('put json > index api', function (): void {
-        $this->putJson(route('money.index', 1))
-            ->assertStatus(405);
-    });
-
-    test('delete > index api', function (): void {
-        $this->delete(route('money.index', 1))
-            ->assertStatus(405);
-    });
-
-    test('delete json > index api', function (): void {
-        $this->deleteJson(route('money.index', 1))
-            ->assertStatus(405);
-    });
-
-    test('post json > countByCreatedLastWeek api', function (): void {
-        $this->postJson(route('money.countByCreatedLastWeek', 1))
-            ->assertStatus(405);
-    });
-
-    test('post > countByCreatedLastWeek api', function (): void {
-        $this->post(route('money.countByCreatedLastWeek', 1))
-            ->assertStatus(405);
-    });
-
-    test('post json > show api', function (): void {
-        $this->postJson(route('money.show', 1))
-            ->assertStatus(405);
-    });
-
-    test('put json > post api', function (): void {
-        $this->putJson(route('money.store', 1))
-            ->assertStatus(405);
-    });
-
-    test('delete json > post api', function (): void {
-        $this->deleteJson(route('money.store', 1))
-            ->assertStatus(405);
-    });
-
-    test('post json > update api', function (): void {
-        $this->postJson(route('money.update', 1))
-            ->assertStatus(405);
-    });
-
-    test('post > delete api', function (): void {
-        $this->post(route('money.destroy', 1))
-            ->assertStatus(405);
-    });
-
-    test('post json > delete api', function (): void {
-        $this->postJson(route('money.destroy', 1))
-            ->assertStatus(405);
-    });
+    apiTestArray([
+        'put > index api' => [
+            'method' => 'PUT',
+            'route' => 'money.index',
+            'status' => 405,
+            'id' => 1,
+            'json' => false,
+        ],
+        'put json > index api' => [
+            'method' => 'PUT',
+            'route' => 'money.index',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'delete > index api' => [
+            'method' => 'DELETE',
+            'route' => 'money.index',
+            'status' => 405,
+            'id' => 1,
+            'json' => false,
+        ],
+        'delete json > index api' => [
+            'method' => 'DELETE',
+            'route' => 'money.index',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'post json > countByCreatedLastWeek api' => [
+            'method' => 'POST',
+            'route' => 'money.countByCreatedLastWeek',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'post > countByCreatedLastWeek api' => [
+            'method' => 'POST',
+            'route' => 'money.countByCreatedLastWeek',
+            'status' => 405,
+            'id' => 1,
+            'json' => false,
+        ],
+        'post json > show api' => [
+            'method' => 'POST',
+            'route' => 'money.show',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'put json > post api' => [
+            'method' => 'PUT',
+            'route' => 'money.store',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'delete json > post api' => [
+            'method' => 'DELETE',
+            'route' => 'money.store',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'post json > update api' => [
+            'method' => 'POST',
+            'route' => 'money.update',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'post > delete api' => [
+            'method' => 'POST',
+            'route' => 'money.destroy',
+            'status' => 405,
+            'id' => 1,
+            'json' => false,
+        ],
+        'post json > delete api' => [
+            'method' => 'POST',
+            'route' => 'money.destroy',
+            'status' => 405,
+            'id' => 1,
+        ],
+    ]);
 });

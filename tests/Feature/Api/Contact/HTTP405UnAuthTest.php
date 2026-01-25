@@ -10,93 +10,114 @@ uses()->group('api-405');
 uses()->group('api-405-unauth');
 
 describe('405 > Unauthorized', function (): void {
-    test('put with parameter > index api', function (): void {
-        $this->put(route('contacts.index', 1))
-            ->assertStatus(405);
-    });
-
-    test('put json with parameter > index api', function (): void {
-        $this->putJson(route('contacts.index', 1))
-            ->assertStatus(405);
-    });
-
-    test('delete with parameter > index api', function (): void {
-        $this->delete(route('contacts.index', 1))
-            ->assertStatus(405);
-    });
-
-    test('delete json with parameter > index api', function (): void {
-        $this->deleteJson(route('contacts.index', 1))
-            ->assertStatus(405);
-    });
-
-    test('post json > countByCreatedLastWeek api', function (): void {
-        $this->postJson(route('contacts.countByCreatedLastWeek', 1))
-            ->assertStatus(405);
-    });
-
-    test('post > countByCreatedLastWeek api', function (): void {
-        $this->post(route('contacts.countByCreatedLastWeek', 1))
-            ->assertStatus(405);
-    });
-
-    test('post json with parameter > show api', function (): void {
-        $this->postJson(route('contacts.show', 1))
-            ->assertStatus(405);
-    });
-
-    test('put json with parameter > post api', function (): void {
-        $this->putJson(route('contacts.store', 1))
-            ->assertStatus(405);
-    });
-
-    test('delete json with parameter > post api', function (): void {
-        $this->deleteJson(route('contacts.store', 1))
-            ->assertStatus(405);
-    });
-
-    test('post json with parameter > update api', function (): void {
-        $this->postJson(route('contacts.update', 1))
-            ->assertStatus(405);
-    });
-
-    test('post with parameter > delete api', function (): void {
-        $this->post(route('contacts.destroy', 1))
-            ->assertStatus(405);
-    });
-
-    test('post json with parameter > delete api', function (): void {
-        $this->postJson(route('contacts.destroy', 1))
-            ->assertStatus(405);
-    });
-
-    test('put without parameter > index api', function (): void {
-        $this->put(route('contacts.index'))
-            ->assertStatus(405);
-    });
-
-    test('put json without parameter > index api', function (): void {
-        $this->putJson(route('contacts.index'))
-            ->assertStatus(405);
-    });
-
-    test('delete without parameter > index api', function (): void {
-        $this->delete(route('contacts.index'))
-            ->assertStatus(405);
-    });
-
-    test('delete json without parameter > index api', function (): void {
-        $this->deleteJson(route('contacts.index'))
-            ->assertStatus(405);
-    });
-
-    test('put json without parameter > post api', function (): void {
-        $this->putJson(route('contacts.store'))
-            ->assertStatus(405);
-    });
-
-    test('delete json without parameter > post api', function (): void {
-        $this->deleteJson(route('contacts.store'))
-            ->assertStatus(405);
-    });
+    apiTestArray([
+        'put with parameter > index api' => [
+            'method' => 'PUT',
+            'route' => 'contacts.index',
+            'status' => 405,
+            'id' => 1,
+            'json' => false,
+        ],
+        'put json with parameter > index api' => [
+            'method' => 'PUT',
+            'route' => 'contacts.index',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'delete with parameter > index api' => [
+            'method' => 'DELETE',
+            'route' => 'contacts.index',
+            'status' => 405,
+            'id' => 1,
+            'json' => false,
+        ],
+        'delete json with parameter > index api' => [
+            'method' => 'DELETE',
+            'route' => 'contacts.index',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'post json > countByCreatedLastWeek api' => [
+            'method' => 'POST',
+            'route' => 'contacts.countByCreatedLastWeek',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'post > countByCreatedLastWeek api' => [
+            'method' => 'POST',
+            'route' => 'contacts.countByCreatedLastWeek',
+            'status' => 405,
+            'id' => 1,
+            'json' => false,
+        ],
+        'post json with parameter > show api' => [
+            'method' => 'POST',
+            'route' => 'contacts.show',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'put json with parameter > post api' => [
+            'method' => 'PUT',
+            'route' => 'contacts.store',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'delete json with parameter > post api' => [
+            'method' => 'DELETE',
+            'route' => 'contacts.store',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'post json with parameter > update api' => [
+            'method' => 'POST',
+            'route' => 'contacts.update',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'post with parameter > delete api' => [
+            'method' => 'POST',
+            'route' => 'contacts.destroy',
+            'status' => 405,
+            'id' => 1,
+            'json' => false,
+        ],
+        'post json with parameter > delete api' => [
+            'method' => 'POST',
+            'route' => 'contacts.destroy',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'put without parameter > index api' => [
+            'method' => 'PUT',
+            'route' => 'contacts.index',
+            'status' => 405,
+            'json' => false,
+        ],
+        'put json without parameter > index api' => [
+            'method' => 'PUT',
+            'route' => 'contacts.index',
+            'status' => 405,
+        ],
+        'delete without parameter > index api' => [
+            'method' => 'DELETE',
+            'route' => 'contacts.index',
+            'status' => 405,
+            'json' => false,
+        ],
+        'delete json without parameter > index api' => [
+            'method' => 'DELETE',
+            'route' => 'contacts.index',
+            'status' => 405,
+        ],
+        'put json without parameter > post api' => [
+            'method' => 'PUT',
+            'route' => 'contacts.store',
+            'status' => 405,
+        ],
+        'delete json without parameter > post api' => [
+            'method' => 'DELETE',
+            'route' => 'contacts.store',
+            'status' => 405,
+        ],
+    ]);
 });

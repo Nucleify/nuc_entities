@@ -14,319 +14,168 @@ beforeEach(function (): void {
     $this->actingAs($this->admin);
 });
 
-describe('422 > POST', function ($userData = userData) {
-    /**
-     * NAME TESTS
-     */
-    $userData['name'] = '';
-    test('name > empty', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['name']],
-        ['errors' => [
-            'name' => ['The name field is required.'],
-        ]]
-    ));
+describe('422 > POST', function (): void {
+    apiTestArray([
+        // NAME TESTS
+        'name > empty' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['name' => '']),
+            'structure' => ['errors' => ['name']],
+            'fragment' => ['errors' => ['name' => ['The name field is required.']]],
+        ],
+        'name > false' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['name' => false]),
+            'structure' => ['errors' => ['name']],
+            'fragment' => ['errors' => ['name' => ['The name field must be a string.', 'The name field must be at least 3 characters.']]],
+        ],
+        'name > true' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['name' => true]),
+            'structure' => ['errors' => ['name']],
+            'fragment' => ['errors' => ['name' => ['The name field must be a string.', 'The name field must be at least 3 characters.']]],
+        ],
+        'name > empty array' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['name' => []]),
+            'structure' => ['errors' => ['name']],
+            'fragment' => ['errors' => ['name' => ['The name field is required.']]],
+        ],
 
-    $userData['name'] = false;
-    test('name > false', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['name']],
-        ['errors' => [
-            'name' => [
-                'The name field must be a string.',
-                'The name field must be at least 3 characters.',
-            ],
-        ]]
-    ));
+        // EMAIL TESTS
+        'email > email format' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['email' => 'admin.example.com']),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field must be a valid email address.']]],
+        ],
+        'email > integer' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['email' => 1]),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field must be a valid email address.', 'The email field must be at least 3 characters.']]],
+        ],
+        'email > false' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['email' => false]),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field must be a valid email address.', 'The email field must be at least 3 characters.']]],
+        ],
+        'email > true' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['email' => true]),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field must be a valid email address.', 'The email field must be at least 3 characters.']]],
+        ],
+        'email > too short' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['email' => '@a']),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field must be a valid email address.', 'The email field must be at least 3 characters.']]],
+        ],
+        'email > too long' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['email' => 'loremipsumdolorsitametconsecteturadipiscingelitseddoetaliqualaborum@exampleemail.com']),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field must not be greater than 70 characters.']]],
+        ],
+        'email > empty array' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['email' => []]),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field is required.']]],
+        ],
 
-    $userData['name'] = true;
-    test('name > true', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['name']],
-        ['errors' => [
-            'name' => [
-                'The name field must be a string.',
-                'The name field must be at least 3 characters.',
-            ],
-        ]]
-    ));
+        // PASSWORD TESTS
+        'password > empty password' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['password' => '']),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field is required.']]],
+        ],
+        'password > integer' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['password' => 1]),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field must be at least 8 characters.', 'The password field confirmation does not match.']]],
+        ],
+        'password > false' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['password' => false]),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field must be at least 8 characters.', 'The password field confirmation does not match.']]],
+        ],
+        'password > true' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['password' => true]),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field must be at least 8 characters.', 'The password field confirmation does not match.']]],
+        ],
+        'password > too short' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['password' => 'L']),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field must be at least 8 characters.', 'The password field confirmation does not match.']]],
+        ],
+        'password > too long' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['password' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do et aliqua laborum.']),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field must not be greater than 50 characters.', 'The password field confirmation does not match.']]],
+        ],
+        'password > empty array' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['password' => []]),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field is required.']]],
+        ],
 
-    $userData['name'] = [];
-    test('name > empty array', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['name']],
-        ['errors' => [
-            'name' => ['The name field is required.'],
-        ]]
-    ));
-
-    $userData['name'] = userData['name'];
-
-    /**
-     * EMAIL TESTS
-     */
-    $userData['email'] = 'admin.example.com';
-    test('email > email format', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => ['The email field must be a valid email address.'],
-        ]]
-    ));
-
-    $userData['email'] = 1;
-    test('email > integer', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => [
-                'The email field must be a valid email address.',
-                'The email field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $userData['email'] = false;
-    test('email > false', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => [
-                'The email field must be a valid email address.',
-                'The email field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $userData['email'] = true;
-    test('email > true', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => [
-                'The email field must be a valid email address.',
-                'The email field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $userData['email'] = '@a';
-    test('email > too short', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => [
-                'The email field must be a valid email address.',
-                'The email field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $userData['email'] = 'loremipsumdolorsitametconsecteturadipiscingelitseddoetaliqualaborum@exampleemail.com';
-    test('email > too long', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => ['The email field must not be greater than 70 characters.'],
-        ]]
-    ));
-
-    $userData['email'] = [];
-    test('email > empty array', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => ['The email field is required.'],
-        ]]
-    ));
-
-    $userData['email'] = userData['email'];
-
-    /**
-     * PASSWORD TESTS
-     */
-    $userData['password'] = '';
-    test('password > empty password', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => ['The password field is required.'],
-        ]]
-    ));
-
-    $userData['password'] = 1;
-    test('password > integer', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => [
-                'The password field must be at least 8 characters.',
-                'The password field confirmation does not match.',
-            ],
-        ]]
-    ));
-
-    $userData['password'] = false;
-    test('password > false', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => [
-                'The password field must be at least 8 characters.',
-                'The password field confirmation does not match.',
-            ],
-        ]]
-    ));
-
-    $userData['password'] = true;
-    test('password > true', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => [
-                'The password field must be at least 8 characters.',
-                'The password field confirmation does not match.',
-            ],
-        ]]
-    ));
-
-    $userData['password'] = 'L';
-    test('password > too short', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => [
-                'The password field must be at least 8 characters.',
-                'The password field confirmation does not match.',
-            ],
-        ]]
-    ));
-
-    $userData['password'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do et aliqua laborum.';
-    test('password > too long', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => [
-                'The password field must not be greater than 50 characters.',
-                'The password field confirmation does not match.',
-            ],
-        ]]
-    ));
-
-    $userData['password'] = [];
-    test('password > empty array', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => ['The password field is required.'],
-        ]]
-    ));
-
-    $userData['password'] = userData['password'];
-
-    /**
-     * ROLE TESTS
-     */
-    $userData['role'] = '';
-    test('role > empty', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['role']],
-        ['errors' => [
-            'role' => ['The role field is required.'],
-        ]]
-    ));
-
-    $userData['role'] = 1;
-    test('role > integer', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['role']],
-        ['errors' => [
-            'role' => ['The selected role is invalid.'],
-        ]]
-    ));
-
-    $userData['role'] = 'invalid';
-    test('role > invalid', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['role']],
-        ['errors' => [
-            'role' => ['The selected role is invalid.'],
-        ]]
-    ));
-
-    $userData['role'] = [];
-    test('role > empty array', apiTest(
-        'POST',
-        'users.store',
-        422,
-        $userData,
-        ['errors' => ['role']],
-        ['errors' => [
-            'role' => ['The role field is required.'],
-        ]]
-    ));
+        // ROLE TESTS
+        'role > empty' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['role' => '']),
+            'structure' => ['errors' => ['role']],
+            'fragment' => ['errors' => ['role' => ['The role field is required.']]],
+        ],
+        'role > integer' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['role' => 1]),
+            'structure' => ['errors' => ['role']],
+            'fragment' => ['errors' => ['role' => ['The selected role is invalid.']]],
+        ],
+        'role > invalid' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['role' => 'invalid']),
+            'structure' => ['errors' => ['role']],
+            'fragment' => ['errors' => ['role' => ['The selected role is invalid.']]],
+        ],
+        'role > empty array' => [
+            'method' => 'POST',
+            'route' => 'users.store',
+            'data' => array_merge(userData, ['role' => []]),
+            'structure' => ['errors' => ['role']],
+            'fragment' => ['errors' => ['role' => ['The role field is required.']]],
+        ],
+    ]);
 });

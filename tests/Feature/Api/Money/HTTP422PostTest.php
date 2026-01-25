@@ -14,467 +14,251 @@ beforeEach(function (): void {
     $this->actingAs($this->admin);
 });
 
-describe('422 > POST', function ($moneyData = moneyData) {
-    /**
-     * USER ID TESTS
-     */
-    $moneyData['user_id'] = '';
-    test('user_id > empty', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['user_id']],
-        ['errors' => [
-            'user_id' => ['The user id field is required.'],
-        ]]
-    ));
+describe('422 > POST', function (): void {
+    apiTestArray([
+        // USER ID TESTS
+        'user_id > empty' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['user_id' => '']),
+            'structure' => ['errors' => ['user_id']],
+            'fragment' => ['errors' => ['user_id' => ['The user id field is required.']]],
+        ],
+        'user_id > string' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['user_id' => 'user_id']),
+            'structure' => ['errors' => ['user_id']],
+            'fragment' => ['errors' => ['user_id' => ['The user id field must be an integer.']]],
+        ],
+        'user_id > false' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['user_id' => false]),
+            'structure' => ['errors' => ['user_id']],
+            'fragment' => ['errors' => ['user_id' => ['The user id field must be an integer.']]],
+        ],
+        'user_id > empty array' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['user_id' => []]),
+            'structure' => ['errors' => ['user_id']],
+            'fragment' => ['errors' => ['user_id' => ['The user id field is required.']]],
+        ],
 
-    $moneyData['user_id'] = 'user_id';
-    test('user_id > string', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['user_id']],
-        ['errors' => [
-            'user_id' => ['The user id field must be an integer.'],
-        ]]
-    ));
+        // COUNT TESTS
+        'count > empty' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['count' => '']),
+            'structure' => ['errors' => ['count']],
+            'fragment' => ['errors' => ['count' => ['The count field is required.']]],
+        ],
+        'count > string' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['count' => 'count']),
+            'structure' => ['errors' => ['count']],
+            'fragment' => ['errors' => ['count' => ['The count field must be an integer.']]],
+        ],
+        'count > false' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['count' => false]),
+            'structure' => ['errors' => ['count']],
+            'fragment' => ['errors' => ['count' => ['The count field must be an integer.']]],
+        ],
+        'count > empty array' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['count' => []]),
+            'structure' => ['errors' => ['count']],
+            'fragment' => ['errors' => ['count' => ['The count field is required.']]],
+        ],
 
-    $moneyData['user_id'] = false;
-    test('user_id > false', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['user_id']],
-        ['errors' => [
-            'user_id' => ['The user id field must be an integer.'],
-        ]]
-    ));
+        // SENDER TESTS
+        'sender > empty' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['sender' => '']),
+            'structure' => ['errors' => ['sender']],
+            'fragment' => ['errors' => ['sender' => ['The sender field is required.']]],
+        ],
+        'sender > integer' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['sender' => 1]),
+            'structure' => ['errors' => ['sender']],
+            'fragment' => ['errors' => ['sender' => ['The sender field must be a string.']]],
+        ],
+        'sender > false' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['sender' => false]),
+            'structure' => ['errors' => ['sender']],
+            'fragment' => ['errors' => ['sender' => ['The sender field must be a string.']]],
+        ],
+        'sender > true' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['sender' => true]),
+            'structure' => ['errors' => ['sender']],
+            'fragment' => ['errors' => ['sender' => ['The sender field must be a string.']]],
+        ],
+        'sender > empty array' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['sender' => []]),
+            'structure' => ['errors' => ['sender']],
+            'fragment' => ['errors' => ['sender' => ['The sender field is required.']]],
+        ],
 
-    $moneyData['user_id'] = [];
-    test('user_id > empty array', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['user_id']],
-        ['errors' => [
-            'user_id' => ['The user id field is required.'],
-        ]]
-    ));
+        // RECEIVER TESTS
+        'receiver > empty' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['receiver' => '']),
+            'structure' => ['errors' => ['receiver']],
+            'fragment' => ['errors' => ['receiver' => ['The receiver field is required.']]],
+        ],
+        'receiver > integer' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['receiver' => 1]),
+            'structure' => ['errors' => ['receiver']],
+            'fragment' => ['errors' => ['receiver' => ['The receiver field must be a string.']]],
+        ],
+        'receiver > false' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['receiver' => false]),
+            'structure' => ['errors' => ['receiver']],
+            'fragment' => ['errors' => ['receiver' => ['The receiver field must be a string.']]],
+        ],
+        'receiver > true' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['receiver' => true]),
+            'structure' => ['errors' => ['receiver']],
+            'fragment' => ['errors' => ['receiver' => ['The receiver field must be a string.']]],
+        ],
+        'receiver > empty array' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['receiver' => []]),
+            'structure' => ['errors' => ['receiver']],
+            'fragment' => ['errors' => ['receiver' => ['The receiver field is required.']]],
+        ],
 
-    $moneyData['user_id'] = moneyData['user_id'];
+        // TITLE TESTS
+        'title > empty' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['title' => '']),
+            'structure' => ['errors' => ['title']],
+            'fragment' => ['errors' => ['title' => ['The title field is required.']]],
+        ],
+        'title > integer' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['title' => 1]),
+            'structure' => ['errors' => ['title']],
+            'fragment' => ['errors' => ['title' => ['The title field must be a string.', 'The title field must be at least 3 characters.']]],
+        ],
+        'title > too short' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['title' => 'ti']),
+            'structure' => ['errors' => ['title']],
+            'fragment' => ['errors' => ['title' => ['The title field must be at least 3 characters.']]],
+        ],
+        'title > false' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['title' => false]),
+            'structure' => ['errors' => ['title']],
+            'fragment' => ['errors' => ['title' => ['The title field must be a string.', 'The title field must be at least 3 characters.']]],
+        ],
+        'title > true' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['title' => true]),
+            'structure' => ['errors' => ['title']],
+            'fragment' => ['errors' => ['title' => ['The title field must be a string.', 'The title field must be at least 3 characters.']]],
+        ],
+        'title > empty array' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['title' => []]),
+            'structure' => ['errors' => ['title']],
+            'fragment' => ['errors' => ['title' => ['The title field is required.']]],
+        ],
 
-    /**
-     * COUNT TESTS
-     */
-    $moneyData['count'] = '';
-    test('count > empty', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['count']],
-        ['errors' => [
-            'count' => ['The count field is required.'],
-        ]]
-    ));
+        // DESCRIPTION TESTS
+        'description > integer' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['description' => 1]),
+            'structure' => ['errors' => ['description']],
+            'fragment' => ['errors' => ['description' => ['The description field must be a string.', 'The description field must be at least 3 characters.']]],
+        ],
+        'description > too short' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['description' => 't']),
+            'structure' => ['errors' => ['description']],
+            'fragment' => ['errors' => ['description' => ['The description field must be at least 3 characters.']]],
+        ],
+        'description > false' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['description' => false]),
+            'structure' => ['errors' => ['description']],
+            'fragment' => ['errors' => ['description' => ['The description field must be a string.', 'The description field must be at least 3 characters.']]],
+        ],
+        'description > true' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['description' => true]),
+            'structure' => ['errors' => ['description']],
+            'fragment' => ['errors' => ['description' => ['The description field must be a string.', 'The description field must be at least 3 characters.']]],
+        ],
+        'description > empty array' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['description' => []]),
+            'structure' => ['errors' => ['description']],
+            'fragment' => ['errors' => ['description' => ['The description field is required.']]],
+        ],
 
-    $moneyData['count'] = 'count';
-    test('count > string', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['count']],
-        ['errors' => [
-            'count' => ['The count field must be an integer.'],
-        ]]
-    ));
-
-    $moneyData['count'] = false;
-    test('count > false', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['count']],
-        ['errors' => [
-            'count' => ['The count field must be an integer.'],
-        ]]
-    ));
-
-    $moneyData['count'] = [];
-    test('count > empty array', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['count']],
-        ['errors' => [
-            'count' => ['The count field is required.'],
-        ]]
-    ));
-
-    $moneyData['count'] = moneyData['count'];
-
-    /**
-     * SENDER TESTS
-     */
-    $moneyData['sender'] = '';
-    test('sender > empty', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['sender']],
-        ['errors' => [
-            'sender' => ['The sender field is required.'],
-        ]]
-    ));
-
-    $moneyData['sender'] = 1;
-    test('sender > integer', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['sender']],
-        ['errors' => [
-            'sender' => [
-                'The sender field must be a string.',
-            ],
-        ]]
-    ));
-
-    $moneyData['sender'] = false;
-    test('sender > false', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['sender']],
-        ['errors' => [
-            'sender' => [
-                'The sender field must be a string.',
-            ],
-        ]]
-    ));
-
-    $moneyData['sender'] = true;
-    test('sender > true', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['sender']],
-        ['errors' => [
-            'sender' => [
-                'The sender field must be a string.',
-            ],
-        ]]
-    ));
-
-    $moneyData['sender'] = [];
-    test('sender > empty array', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['sender']],
-        ['errors' => [
-            'sender' => [
-                'The sender field is required.',
-            ],
-        ]]
-    ));
-
-    $moneyData['sender'] = moneyData['sender'];
-
-    /**
-     * RECEIVER TESTS
-     */
-    $moneyData['receiver'] = '';
-    test('receiver > empty', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['receiver']],
-        ['errors' => [
-            'receiver' => ['The receiver field is required.'],
-        ]]
-    ));
-
-    $moneyData['receiver'] = 1;
-    test('receiver > integer', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['receiver']],
-        ['errors' => [
-            'receiver' => [
-                'The receiver field must be a string.',
-            ],
-        ]]
-    ));
-
-    $moneyData['receiver'] = false;
-    test('receiver > false', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['receiver']],
-        ['errors' => [
-            'receiver' => [
-                'The receiver field must be a string.',
-            ],
-        ]]
-    ));
-
-    $moneyData['receiver'] = true;
-    test('receiver > true', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['receiver']],
-        ['errors' => [
-            'receiver' => [
-                'The receiver field must be a string.',
-            ],
-        ]]
-    ));
-
-    $moneyData['receiver'] = [];
-    test('receiver > empty array', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['receiver']],
-        ['errors' => [
-            'receiver' => [
-                'The receiver field is required.',
-            ],
-        ]]
-    ));
-
-    $moneyData['receiver'] = moneyData['receiver'];
-
-    /**
-     * TITLE TESTS
-     */
-    $moneyData['title'] = '';
-    test('title > empty', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['title']],
-        ['errors' => [
-            'title' => ['The title field is required.'],
-        ]]
-    ));
-
-    $moneyData['title'] = 1;
-    test('title > integer', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['title']],
-        ['errors' => [
-            'title' => [
-                'The title field must be a string.',
-                'The title field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $moneyData['title'] = 'ti';
-    test('title > too short', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['title']],
-        ['errors' => [
-            'title' => ['The title field must be at least 3 characters.'],
-        ]]
-    ));
-
-    $moneyData['title'] = false;
-    test('title > false', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['title']],
-        ['errors' => [
-            'title' => [
-                'The title field must be a string.',
-                'The title field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $moneyData['title'] = true;
-    test('title > true', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['title']],
-        ['errors' => [
-            'title' => [
-                'The title field must be a string.',
-                'The title field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $moneyData['title'] = [];
-    test('title > empty array', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['title']],
-        ['errors' => [
-            'title' => ['The title field is required.'],
-        ]]
-    ));
-
-    $moneyData['title'] = moneyData['title'];
-
-    /**
-     * DESCRIPTION TESTS
-     */
-    $moneyData['description'] = 1;
-    test('description > integer', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['description']],
-        ['errors' => [
-            'description' => [
-                'The description field must be a string.',
-                'The description field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $moneyData['description'] = 't';
-    test('description > too short', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['description']],
-        ['errors' => [
-            'description' => ['The description field must be at least 3 characters.'],
-        ]]
-    ));
-
-    $moneyData['description'] = false;
-    test('description > false', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['description']],
-        ['errors' => [
-            'description' => [
-                'The description field must be a string.',
-                'The description field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $moneyData['description'] = true;
-    test('description > true', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['description']],
-        ['errors' => [
-            'description' => [
-                'The description field must be a string.',
-                'The description field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $moneyData['description'] = [];
-    test('description > empty array', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['description']],
-        ['errors' => [
-            'description' => ['The description field is required.'],
-        ]]
-    ));
-
-    $moneyData['description'] = moneyData['description'];
-
-    /**
-     * CATEGORY TESTS
-     */
-    $moneyData['category'] = 1;
-    test('category > integer', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['category']],
-        ['errors' => [
-            'category' => ['The category field must be a string.'],
-        ]]
-    ));
-
-    $moneyData['category'] = false;
-    test('category > false', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['category']],
-        ['errors' => [
-            'category' => ['The category field must be a string.'],
-        ]]
-    ));
-
-    $moneyData['category'] = true;
-    test('category > true', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['category']],
-        ['errors' => [
-            'category' => ['The category field must be a string.'],
-        ]]
-    ));
-
-    $moneyData['category'] = [];
-    test('category > empty array', apiTest(
-        'POST',
-        'money.store',
-        422,
-        $moneyData,
-        ['errors' => ['category']],
-        ['errors' => [
-            'category' => ['The category field is required.'],
-        ]]
-    ));
+        // CATEGORY TESTS
+        'category > integer' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['category' => 1]),
+            'structure' => ['errors' => ['category']],
+            'fragment' => ['errors' => ['category' => ['The category field must be a string.']]],
+        ],
+        'category > false' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['category' => false]),
+            'structure' => ['errors' => ['category']],
+            'fragment' => ['errors' => ['category' => ['The category field must be a string.']]],
+        ],
+        'category > true' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['category' => true]),
+            'structure' => ['errors' => ['category']],
+            'fragment' => ['errors' => ['category' => ['The category field must be a string.']]],
+        ],
+        'category > empty array' => [
+            'method' => 'POST',
+            'route' => 'money.store',
+            'data' => array_merge(moneyData, ['category' => []]),
+            'structure' => ['errors' => ['category']],
+            'fragment' => ['errors' => ['category' => ['The category field is required.']]],
+        ],
+    ]);
 });

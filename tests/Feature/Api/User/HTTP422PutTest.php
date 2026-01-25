@@ -14,304 +14,190 @@ beforeEach(function (): void {
     $this->actingAs($this->admin);
 });
 
-describe('422 > PUT', function ($updatedUserData = updatedUserData) {
-    /**
-     * NAME TESTS
-     */
-    $updatedUserData['name'] = '';
-    test('name > empty', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['name']],
-        ['errors' => [
-            'name' => ['The name field is required.'],
-        ]]
-    ));
+describe('422 > PUT', function (): void {
+    apiTestArray([
+        // NAME TESTS
+        'name > empty' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['name' => '']),
+            'structure' => ['errors' => ['name']],
+            'fragment' => ['errors' => ['name' => ['The name field is required.']]],
+        ],
+        'name > false' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['name' => false]),
+            'structure' => ['errors' => ['name']],
+            'fragment' => ['errors' => ['name' => ['The name field must be a string.', 'The name field must be at least 3 characters.']]],
+        ],
+        'name > true' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['name' => true]),
+            'structure' => ['errors' => ['name']],
+            'fragment' => ['errors' => ['name' => ['The name field must be a string.', 'The name field must be at least 3 characters.']]],
+        ],
+        'name > empty array' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['name' => []]),
+            'structure' => ['errors' => ['name']],
+            'fragment' => ['errors' => ['name' => ['The name field is required.']]],
+        ],
 
-    $updatedUserData['name'] = false;
-    test('name > false', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['name']],
-        ['errors' => [
-            'name' => [
-                'The name field must be a string.',
-                'The name field must be at least 3 characters.',
-            ],
-        ]]
-    ));
+        // EMAIL TESTS
+        'email > email format' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['email' => 'admin.example.com']),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field must be a valid email address.']]],
+        ],
+        'email > integer' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['email' => 1]),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field must be a valid email address.', 'The email field must be at least 3 characters.']]],
+        ],
+        'email > false' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['email' => false]),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field must be a valid email address.', 'The email field must be at least 3 characters.']]],
+        ],
+        'email > true' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['email' => true]),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field must be a valid email address.', 'The email field must be at least 3 characters.']]],
+        ],
+        'email > too short' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['email' => '@a']),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field must be a valid email address.', 'The email field must be at least 3 characters.']]],
+        ],
+        'email > too long' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['email' => 'loremipsumdolorsitametconsecteturadipiscingelitseddoetaliqualaborum@exampleemail.com']),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field must not be greater than 70 characters.']]],
+        ],
+        'email > empty array' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['email' => []]),
+            'structure' => ['errors' => ['email']],
+            'fragment' => ['errors' => ['email' => ['The email field is required.']]],
+        ],
 
-    $updatedUserData['name'] = true;
-    test('name > true', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['name']],
-        ['errors' => [
-            'name' => [
-                'The name field must be a string.',
-                'The name field must be at least 3 characters.',
-            ],
-        ]]
-    ));
+        // PASSWORD TESTS
+        'password > empty password' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['password' => '']),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field must be at least 8 characters.']]],
+        ],
+        'password > integer' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['password' => 1]),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field must be at least 8 characters.']]],
+        ],
+        'password > false' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['password' => false]),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field must be at least 8 characters.']]],
+        ],
+        'password > true' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['password' => true]),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field must be at least 8 characters.']]],
+        ],
+        'password > too short' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['password' => 'L']),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field must be at least 8 characters.']]],
+        ],
+        'password > too long' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['password' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do et aliqua laborum.']),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field must not be greater than 50 characters.']]],
+        ],
+        'password > empty array' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['password' => []]),
+            'structure' => ['errors' => ['password']],
+            'fragment' => ['errors' => ['password' => ['The password field must be at least 8 characters.']]],
+        ],
 
-    $updatedUserData['name'] = [];
-    test('name > empty array', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['name']],
-        ['errors' => [
-            'name' => ['The name field is required.'],
-        ]]
-    ));
-
-    $updatedUserData['name'] = updatedUserData['name'];
-
-    /**
-     * EMAIL TESTS
-     */
-    $updatedUserData['email'] = 'admin.example.com';
-    test('email > email format', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => ['The email field must be a valid email address.'],
-        ]]
-    ));
-
-    $updatedUserData['email'] = 1;
-    test('email > integer', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => [
-                'The email field must be a valid email address.',
-                'The email field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $updatedUserData['email'] = false;
-    test('email > false', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => [
-                'The email field must be a valid email address.',
-                'The email field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $updatedUserData['email'] = true;
-    test('email > true', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => [
-                'The email field must be a valid email address.',
-                'The email field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $updatedUserData['email'] = '@a';
-    test('email > too short', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => [
-                'The email field must be a valid email address.',
-                'The email field must be at least 3 characters.',
-            ],
-        ]]
-    ));
-
-    $updatedUserData['email'] = 'loremipsumdolorsitametconsecteturadipiscingelitseddoetaliqualaborum@exampleemail.com';
-    test('email > too long', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => ['The email field must not be greater than 70 characters.'],
-        ]]
-    ));
-
-    $updatedUserData['email'] = [];
-    test('email > empty array', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['email']],
-        ['errors' => [
-            'email' => ['The email field is required.'],
-        ]]
-    ));
-
-    $updatedUserData['email'] = updatedUserData['email'];
-
-    /**
-     * PASSWORD TESTS
-     */
-    $updatedUserData['password'] = '';
-    test('password > empty password', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => ['The password field must be at least 8 characters.'],
-        ]]
-    ));
-
-    $updatedUserData['password'] = 1;
-    test('password > integer', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => ['The password field must be at least 8 characters.'],
-        ]]
-    ));
-
-    $updatedUserData['password'] = false;
-    test('password > false', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => ['The password field must be at least 8 characters.'],
-        ]]
-    ));
-
-    $updatedUserData['password'] = true;
-    test('password > true', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => ['The password field must be at least 8 characters.'],
-        ]]
-    ));
-
-    $updatedUserData['password'] = 'L';
-    test('password > too short', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => ['The password field must be at least 8 characters.'],
-        ]]
-    ));
-
-    $updatedUserData['password'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do et aliqua laborum.';
-    test('password > too long', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => ['The password field must not be greater than 50 characters.'],
-        ]]
-    ));
-
-    $updatedUserData['password'] = [];
-    test('password > empty array', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['password']],
-        ['errors' => [
-            'password' => ['The password field must be at least 8 characters.'],
-        ]]
-    ));
-
-    $updatedUserData['password'] = updatedUserData['password'];
-
-    /**
-     * ROLE TESTS
-     */
-    $updatedUserData['role'] = '';
-    test('role > empty', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['role']],
-        ['errors' => [
-            'role' => ['The role field is required.'],
-        ]]
-    ));
-
-    $updatedUserData['role'] = 1;
-    test('role > integer', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['role']],
-        ['errors' => [
-            'role' => ['The selected role is invalid.'],
-        ]]
-    ));
-
-    $updatedUserData['role'] = 'invalid';
-    test('role > invalid', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['role']],
-        ['errors' => [
-            'role' => ['The selected role is invalid.'],
-        ]]
-    ));
-
-    $updatedUserData['role'] = [];
-    test('role > empty array', apiTest(
-        'PUT',
-        'users.update',
-        422,
-        $updatedUserData,
-        ['errors' => ['role']],
-        ['errors' => [
-            'role' => ['The role field is required.'],
-        ]]
-    ));
+        // ROLE TESTS
+        'role > empty' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['role' => '']),
+            'structure' => ['errors' => ['role']],
+            'fragment' => ['errors' => ['role' => ['The role field is required.']]],
+        ],
+        'role > integer' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['role' => 1]),
+            'structure' => ['errors' => ['role']],
+            'fragment' => ['errors' => ['role' => ['The selected role is invalid.']]],
+        ],
+        'role > invalid' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['role' => 'invalid']),
+            'structure' => ['errors' => ['role']],
+            'fragment' => ['errors' => ['role' => ['The selected role is invalid.']]],
+        ],
+        'role > empty array' => [
+            'method' => 'PUT',
+            'route' => 'users.update',
+            'id' => 1,
+            'data' => array_merge(updatedUserData, ['role' => []]),
+            'structure' => ['errors' => ['role']],
+            'fragment' => ['errors' => ['role' => ['The role field is required.']]],
+        ],
+    ]);
 });

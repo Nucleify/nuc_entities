@@ -13,18 +13,27 @@ beforeEach(function (): void {
 });
 
 describe('302', function (): void {
-    test('put > show api', function (): void {
-        $this->put(route('money.show', 1))
-            ->assertStatus(302);
-    });
-
-    test('put > update api', function (): void {
-        $this->put(route('money.update', 1))
-            ->assertStatus(302);
-    });
-
-    test('put > delete api', function (): void {
-        $this->put(route('money.destroy', 1))
-            ->assertStatus(302);
-    });
+    apiTestArray([
+        'put > show api' => [
+            'method' => 'PUT',
+            'route' => 'money.show',
+            'status' => 302,
+            'id' => 1,
+            'json' => false,
+        ],
+        'put > update api' => [
+            'method' => 'PUT',
+            'route' => 'money.update',
+            'status' => 302,
+            'id' => 1,
+            'json' => false,
+        ],
+        'put > delete api' => [
+            'method' => 'PUT',
+            'route' => 'money.destroy',
+            'status' => 302,
+            'id' => 1,
+            'json' => false,
+        ],
+    ]);
 });

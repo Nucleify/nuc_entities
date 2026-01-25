@@ -10,63 +10,82 @@ uses()->group('api-405');
 uses()->group('api-405-unauth');
 
 describe('405 > Unauthorized', function (): void {
-    test('put > index api', function (): void {
-        $this->put(route('articles.index', 1))
-            ->assertStatus(405);
-    });
-
-    test('put json > index api', function (): void {
-        $this->putJson(route('articles.index', 1))
-            ->assertStatus(405);
-    });
-
-    test('delete > index api', function (): void {
-        $this->delete(route('articles.index', 1))
-            ->assertStatus(405);
-    });
-
-    test('delete json > index api', function (): void {
-        $this->deleteJson(route('articles.index', 1))
-            ->assertStatus(405);
-    });
-
-    test('post json > countByCreatedLastWeek api', function (): void {
-        $this->postJson(route('articles.countByCreatedLastWeek', 1))
-            ->assertStatus(405);
-    });
-
-    test('post > countByCreatedLastWeek api', function (): void {
-        $this->post(route('articles.countByCreatedLastWeek', 1))
-            ->assertStatus(405);
-    });
-
-    test('post json > show api', function (): void {
-        $this->postJson(route('articles.show', 1))
-            ->assertStatus(405);
-    });
-
-    test('put json > post api', function (): void {
-        $this->putJson(route('articles.store', 1))
-            ->assertStatus(405);
-    });
-
-    test('delete json > post api', function (): void {
-        $this->deleteJson(route('articles.store', 1))
-            ->assertStatus(405);
-    });
-
-    test('post json > update api', function (): void {
-        $this->postJson(route('articles.update', 1))
-            ->assertStatus(405);
-    });
-
-    test('post > delete api', function (): void {
-        $this->post(route('articles.destroy', 1))
-            ->assertStatus(405);
-    });
-
-    test('post json > delete api', function (): void {
-        $this->postJson(route('articles.destroy', 1))
-            ->assertStatus(405);
-    });
+    apiTestArray([
+        'put > index api' => [
+            'method' => 'PUT',
+            'route' => 'articles.index',
+            'status' => 405,
+            'id' => 1,
+            'json' => false,
+        ],
+        'put json > index api' => [
+            'method' => 'PUT',
+            'route' => 'articles.index',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'delete > index api' => [
+            'method' => 'DELETE',
+            'route' => 'articles.index',
+            'status' => 405,
+            'id' => 1,
+            'json' => false,
+        ],
+        'delete json > index api' => [
+            'method' => 'DELETE',
+            'route' => 'articles.index',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'post json > countByCreatedLastWeek api' => [
+            'method' => 'POST',
+            'route' => 'articles.countByCreatedLastWeek',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'post > countByCreatedLastWeek api' => [
+            'method' => 'POST',
+            'route' => 'articles.countByCreatedLastWeek',
+            'status' => 405,
+            'id' => 1,
+            'json' => false,
+        ],
+        'post json > show api' => [
+            'method' => 'POST',
+            'route' => 'articles.show',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'put json > post api' => [
+            'method' => 'PUT',
+            'route' => 'articles.store',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'delete json > post api' => [
+            'method' => 'DELETE',
+            'route' => 'articles.store',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'post json > update api' => [
+            'method' => 'POST',
+            'route' => 'articles.update',
+            'status' => 405,
+            'id' => 1,
+        ],
+        'post > delete api' => [
+            'method' => 'POST',
+            'route' => 'articles.destroy',
+            'status' => 405,
+            'id' => 1,
+            'json' => false,
+        ],
+        'post json > delete api' => [
+            'method' => 'POST',
+            'route' => 'articles.destroy',
+            'status' => 405,
+            'id' => 1,
+        ],
+    ]);
 });
