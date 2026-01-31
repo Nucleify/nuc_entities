@@ -46,8 +46,6 @@ use Multicaret\Acquaintances\Traits\Friendable;
  * @property HasMany contacts()
  * @property HasMany files()
  * @property HasMany money()
- * @property HasMany card()
- * @property HasMany question()
  * @property void createContactFromUserDetails()
  */
 class User extends Authenticatable implements UserContract
@@ -244,21 +242,6 @@ class User extends Authenticatable implements UserContract
     public function money(): HasMany
     {
         return $this->hasMany(Money::class, 'user_id');
-    }
-
-    public function tasks(): HasMany
-    {
-        return $this->hasMany(Task::class, 'user_id');
-    }
-
-    public function card(): HasMany
-    {
-        return $this->hasMany(Card::class);
-    }
-
-    public function question(): HasMany
-    {
-        return $this->hasMany(Question::class);
     }
 
     public function userColors(): HasMany
