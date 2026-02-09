@@ -36,8 +36,13 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'nuxt/app'
+
 import type { TileInterface } from 'atomic'
 import { articleRequests, contactRequests, moneyRequests } from 'atomic'
+
+const route = useRoute()
+const lang = computed(() => (route.params.lang as string) || 'en')
 
 const {
   results: articles,
@@ -89,7 +94,7 @@ watch(
 
 const entities = computed<TileInterface[]>(() => [
   {
-    href: '/entities/articles',
+    href: `/${lang.value}/entities/articles`,
     header: 'Articles',
     count: articles.value?.length || 0,
     icon: 'prime:comment',
@@ -98,7 +103,7 @@ const entities = computed<TileInterface[]>(() => [
     adType: 'article',
   },
   {
-    href: '/entities/contacts',
+    href: `/${lang.value}/entities/contacts`,
     header: 'Contacts',
     count: contacts.value?.length || 0,
     icon: 'prime:user',
@@ -107,7 +112,7 @@ const entities = computed<TileInterface[]>(() => [
     adType: 'contact',
   },
   {
-    href: '/entities/money',
+    href: `/${lang.value}/entities/money`,
     header: 'Money',
     count: money.value?.length || 0,
     icon: 'prime:dollar',
