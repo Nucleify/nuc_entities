@@ -62,6 +62,8 @@ class User extends Authenticatable implements UserContract
         'email',
         'password',
         'role',
+        'is_demo',
+        'demo_expires_at',
     ];
 
     protected $hidden = [
@@ -72,6 +74,8 @@ class User extends Authenticatable implements UserContract
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_demo' => 'boolean',
+        'demo_expires_at' => 'datetime',
     ];
 
     /**
@@ -130,6 +134,11 @@ class User extends Authenticatable implements UserContract
     public function isSuperAdmin(): bool
     {
         return $this->role === 'super_admin';
+    }
+
+    public function isDemo(): bool
+    {
+        return $this->is_demo === true;
     }
 
     public function isStaff(): bool
@@ -200,6 +209,12 @@ class User extends Authenticatable implements UserContract
     public function scopeGetBySuperAdminRole(Builder $query): Builder
     {
         return $query->where('role', 'super_admin');
+    }
+
+    public function scopeExpiredDemo(Builder $query): Builder
+    {
+        return $query->where('is_demo', true)
+            ->where('demo_expires_at', '<', now());
     }
 
     /**

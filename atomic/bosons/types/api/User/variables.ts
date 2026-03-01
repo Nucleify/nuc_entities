@@ -5,4 +5,5 @@ export type UserRoleType =
   | 'test_admin'
   | 'test_tech'
   | 'test_user'
+  | 'demo'
   | 'user'
