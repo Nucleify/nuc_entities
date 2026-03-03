@@ -9,7 +9,6 @@ class EntitiesSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            UserSeeder::class,
             ContactSeeder::class,
             ArticleSeeder::class,
             MoneySeeder::class,

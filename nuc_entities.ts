@@ -8,7 +8,6 @@ import {
   NucEntitiesPage,
   NucMoneyDashboard,
   NucMoneyPage,
-  NucUserDashboard,
 } from './atomic'
 
 export function registerNucEntities(app: App<Element>): void {
@@ -20,5 +19,4 @@ export function registerNucEntities(app: App<Element>): void {
     .component('nuc-article-dashboard', NucArticleDashboard)
     .component('nuc-contact-dashboard', NucContactDashboard)
     .component('nuc-money-dashboard', NucMoneyDashboard)
-    .component('nuc-user-dashboard', NucUserDashboard)
 }
