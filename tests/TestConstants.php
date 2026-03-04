@@ -76,23 +76,3 @@ const updatedMoneyData = [
     'description' => 'Id laboriosam in consequatur perspiciatis ut perferendis. Quia suscipit earum quasi.',
     'category' => 'omnis',
 ];
-
-/**
- *  User
- */
-const userData = [
-    'id' => 1,
-    'name' => 'User',
-    'email' => 'user@example.com',
-    'password' => 'password',
-    'password_confirmation' => 'password',
-    'role' => 'user',
-];
-const updatedUserData = [
-    'id' => 1,
-    'name' => 'Updated User',
-    'password' => 'password',
-    'password_confirmation' => 'password',
-    'email' => 'updateduser@example.com',
-    'role' => 'user',
-];

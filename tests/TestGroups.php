@@ -70,10 +70,6 @@ uses()
     ->in('Feature/Api/Money');
 
 uses()
-    ->group('user-api')
-    ->in('Feature/Api/User');
-
-uses()
     ->group('feature')
     ->in('Feature');
 

@@ -11,5 +11,3 @@ $articleData = require_once __DIR__ . '/TestConstants.php';
 $updatedArticleData = require_once __DIR__ . '/TestConstants.php';
 $contactData = require_once __DIR__ . '/TestConstants.php';
 $updatedContactData = require_once __DIR__ . '/TestConstants.php';
-$userData = require_once __DIR__ . '/TestConstants.php';
-$updatedUserData = require_once __DIR__ . '/TestConstants.php';

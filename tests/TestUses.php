@@ -36,11 +36,6 @@ if (env('DB_DATABASE') === 'database/database.sqlite') {
             'Feature/Api/Money/HTTP422PostTest.php',
             'Feature/Api/Money/HTTP422PutTest.php',
 
-            // User API
-            'Feature/Api/User/HTTP302Test.php',
-            'Feature/Api/User/HTTP422PostTest.php',
-            'Feature/Api/User/HTTP422PutTest.php',
-
             'Database/Models'
         );
 
@@ -60,10 +55,6 @@ if (env('DB_DATABASE') === 'database/database.sqlite') {
             // Money API
             'Feature/Api/Money/HTTP200Test.php',
             'Feature/Api/Money/HTTP500Test.php',
-
-            // User API
-            'Feature/Api/User/HTTP200Test.php',
-            'Feature/Api/User/HTTP500Test.php',
 
             'Database/Factories',
             'Database/Migrations',
