@@ -3,17 +3,17 @@ import { roles } from 'atomic'
 
 export function useContactFields(): UseFieldsInterface<EntityFieldInterface> {
   const fieldData: readonly [string, string, string][] = [
-    ['first_name', 'First Name', 'input-text'],
-    ['last_name', 'Last Name', 'input-text'],
-    ['email', 'Email', 'input-text'],
-    ['personal_phone', 'Personal Phone', 'input-mask'],
-    ['work_phone', 'Work Phone', 'input-mask'],
-    ['address', 'Address', 'textarea'],
-    ['birthday', 'Birthday', 'date-picker'],
-    ['contact_groups', 'Contact Groups', 'input-text'],
-    ['role', 'Role', 'select'],
-    ['updated_at', 'Updated At', ''],
-    ['created_at', 'Created At', ''],
+    ['first_name', 'field-first-name', 'input-text'],
+    ['last_name', 'field-last-name', 'input-text'],
+    ['email', 'field-email', 'input-text'],
+    ['personal_phone', 'field-personal-phone', 'input-mask'],
+    ['work_phone', 'field-work-phone', 'input-mask'],
+    ['address', 'field-address', 'textarea'],
+    ['birthday', 'field-birthday', 'date-picker'],
+    ['contact_groups', 'field-contact-groups', 'input-text'],
+    ['role', 'field-role', 'select'],
+    ['updated_at', 'field-updated-at', ''],
+    ['created_at', 'field-created-at', ''],
   ] as const
 
   const createAndEditFields: EntityFieldInterface[] = fieldData
@@ -21,7 +21,7 @@ export function useContactFields(): UseFieldsInterface<EntityFieldInterface> {
     .map(([name, label, type]): EntityFieldInterface => {
       const props =
         name === 'role'
-          ? { options: roles, placeholder: 'Select a role' }
+          ? { options: roles, placeholder: 'field-select-role' }
           : undefined
 
       return { name, label, type, props }

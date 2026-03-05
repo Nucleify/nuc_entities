@@ -37,11 +37,13 @@
 
 <script setup lang="ts">
 import { useRoute } from 'nuxt/app'
+import { useI18n } from 'vue-i18n'
 
 import type { TileInterface } from 'atomic'
 import { articleRequests, contactRequests, moneyRequests } from 'atomic'
 
 const route = useRoute()
+const { t } = useI18n()
 const lang = computed(() => (route.params.lang as string) || 'en')
 
 const {
@@ -95,29 +97,29 @@ watch(
 const entities = computed<TileInterface[]>(() => [
   {
     href: `/${lang.value}/entities/articles`,
-    header: 'Articles',
+    header: t('admin-tile-articles'),
     count: articles.value?.length || 0,
     icon: 'prime:comment',
     countSecondary: articlesCreatedLastWeek.value,
-    textSecondary: 'this week',
+    textSecondary: t('admin-tile-this-week'),
     adType: 'article',
   },
   {
     href: `/${lang.value}/entities/contacts`,
-    header: 'Contacts',
+    header: t('admin-tile-contacts'),
     count: contacts.value?.length || 0,
     icon: 'prime:user',
     countSecondary: contactsCreatedLastWeek.value,
-    textSecondary: 'this week',
+    textSecondary: t('admin-tile-this-week'),
     adType: 'contact',
   },
   {
     href: `/${lang.value}/entities/money`,
-    header: 'Money',
+    header: t('admin-tile-money'),
     count: money.value?.length || 0,
     icon: 'prime:dollar',
     countSecondary: moneyCreatedLastWeek.value,
-    textSecondary: 'this week',
+    textSecondary: t('admin-tile-this-week'),
     adType: 'money',
   },
 ])

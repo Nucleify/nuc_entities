@@ -6,8 +6,8 @@
       :open-dialog="openDialog"
       :tag="3"
       ad-type="money"
-      header-text="Manage Money"
-      button-text="New Transaction"
+      :header-text="t('entity-money-manage')"
+      :button-text="t('entity-money-new')"
     />
 
     <nuc-dialog
@@ -30,11 +30,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import type { NucDashboardInterface } from 'atomic'
 import { moneyRequests, useMoneyFields, useNucDialog } from 'atomic'
 
 const props = defineProps<NucDashboardInterface>()
+const { t } = useI18n()
 
 const {
   visibleShow,
@@ -55,7 +57,7 @@ const dialogs = computed(() => [
     action: 'show',
     visible: visibleShow.value,
     data: selectedObject.value,
-    cancelButtonLabel: 'Close',
+    cancelButtonLabel: t('common-close'),
     fields: showFields,
   },
   {
@@ -63,9 +65,9 @@ const dialogs = computed(() => [
     action: 'delete',
     visible: visibleDelete.value,
     selectedObject: selectedObject.value,
-    title: 'Delete transaction?',
-    confirmButtonLabel: 'Confirm',
-    cancelButtonLabel: 'Cancel',
+    title: t('entity-money-delete'),
+    confirmButtonLabel: t('common-confirm'),
+    cancelButtonLabel: t('common-cancel'),
     confirm: deleteMoney,
     getData: props.getData,
   },
@@ -73,9 +75,9 @@ const dialogs = computed(() => [
     entity: 'money',
     action: 'create',
     visible: visibleCreate.value,
-    title: 'Create new transaction',
-    confirmButtonLabel: 'Confirm',
-    cancelButtonLabel: 'Cancel',
+    title: t('entity-money-create'),
+    confirmButtonLabel: t('common-confirm'),
+    cancelButtonLabel: t('common-cancel'),
     confirm: storeMoney,
     getData: props.getData,
     fields: createAndEditFields,
@@ -85,9 +87,9 @@ const dialogs = computed(() => [
     action: 'edit',
     visible: visibleEdit.value,
     data: selectedObject.value,
-    title: 'Edit transaction',
-    confirmButtonLabel: 'Update',
-    cancelButtonLabel: 'Cancel',
+    title: t('entity-money-edit'),
+    confirmButtonLabel: t('common-update'),
+    cancelButtonLabel: t('common-cancel'),
     confirm: editMoney,
     getData: props.getData,
     fields: createAndEditFields,

@@ -2,11 +2,11 @@ import type { EntityFieldInterface, UseFieldsInterface } from 'atomic'
 
 export function useArticleFields(): UseFieldsInterface<EntityFieldInterface> {
   const fieldData: readonly [string, string, string][] = [
-    ['title', 'Title', 'input-text'],
-    ['description', 'Description', 'textarea'],
-    ['category', 'Category', 'input-text'],
-    ['updated_at', 'Updated At', ''],
-    ['created_at', 'Created At', ''],
+    ['title', 'field-title', 'input-text'],
+    ['description', 'field-description', 'textarea'],
+    ['category', 'field-category', 'input-text'],
+    ['updated_at', 'field-updated-at', ''],
+    ['created_at', 'field-created-at', ''],
   ] as const
 
   const createAndEditFields: readonly EntityFieldInterface[] = fieldData

@@ -6,8 +6,8 @@
       :loading="loading"
       :open-dialog="openDialog"
       :tag="3"
-      header-text="Manage Articles"
-      button-text="New Article"
+      :header-text="t('entity-article-manage')"
+      :button-text="t('entity-article-new')"
     />
 
     <nuc-dialog
@@ -30,11 +30,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import type { NucDashboardInterface } from 'atomic'
 import { articleRequests, useArticleFields, useNucDialog } from 'atomic'
 
 const props = defineProps<NucDashboardInterface>()
+const { t } = useI18n()
 
 const {
   visibleShow,
@@ -56,7 +58,7 @@ const dialogs = computed(() => [
     action: 'show',
     visible: visibleShow.value,
     data: selectedObject.value,
-    cancelButtonLabel: 'Close',
+    cancelButtonLabel: t('common-close'),
     fields: showFields,
   },
   {
@@ -64,9 +66,9 @@ const dialogs = computed(() => [
     action: 'delete',
     visible: visibleDelete.value,
     selectedObject: selectedObject.value,
-    title: 'Delete article?',
-    confirmButtonLabel: 'Confirm',
-    cancelButtonLabel: 'Cancel',
+    title: t('entity-article-delete'),
+    confirmButtonLabel: t('common-confirm'),
+    cancelButtonLabel: t('common-cancel'),
     confirm: deleteArticle,
     getData: props.getData,
   },
@@ -74,9 +76,9 @@ const dialogs = computed(() => [
     entity: 'article',
     action: 'create',
     visible: visibleCreate.value,
-    title: 'Create new article',
-    confirmButtonLabel: 'Confirm',
-    cancelButtonLabel: 'Cancel',
+    title: t('entity-article-create'),
+    confirmButtonLabel: t('common-confirm'),
+    cancelButtonLabel: t('common-cancel'),
     confirm: storeArticle,
     getData: props.getData,
     fields: createAndEditFields,
@@ -86,9 +88,9 @@ const dialogs = computed(() => [
     action: 'edit',
     visible: visibleEdit.value,
     data: selectedObject.value,
-    title: 'Edit article',
-    confirmButtonLabel: 'Update',
-    cancelButtonLabel: 'Cancel',
+    title: t('entity-article-edit'),
+    confirmButtonLabel: t('common-update'),
+    cancelButtonLabel: t('common-cancel'),
     confirm: editArticle,
     getData: props.getData,
     fields: createAndEditFields,

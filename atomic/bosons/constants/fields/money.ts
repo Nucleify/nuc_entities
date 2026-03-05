@@ -3,14 +3,14 @@ import { roles } from 'atomic'
 
 export function useMoneyFields(): UseFieldsInterface<EntityFieldInterface> {
   const fieldData: readonly [string, string, string][] = [
-    ['count', 'Count', 'input-text'],
-    ['sender', 'Sender', 'input-text'],
-    ['receiver', 'Receiver', 'input-text'],
-    ['title', 'Title', 'input-text'],
-    ['description', 'Description', 'textarea'],
-    ['category', 'Category', 'input-text'],
-    ['updated_at', 'Updated At', ''],
-    ['created_at', 'Created At', ''],
+    ['count', 'field-count', 'input-text'],
+    ['sender', 'field-sender', 'input-text'],
+    ['receiver', 'field-receiver', 'input-text'],
+    ['title', 'field-title', 'input-text'],
+    ['description', 'field-description', 'textarea'],
+    ['category', 'field-category', 'input-text'],
+    ['updated_at', 'field-updated-at', ''],
+    ['created_at', 'field-created-at', ''],
   ] as const
 
   const createAndEditFields: EntityFieldInterface[] = fieldData
@@ -18,7 +18,7 @@ export function useMoneyFields(): UseFieldsInterface<EntityFieldInterface> {
     .map(([name, label, type]): EntityFieldInterface => {
       const props =
         name === 'role'
-          ? { options: roles, placeholder: 'Select a role' }
+          ? { options: roles, placeholder: 'field-select-role' }
           : undefined
 
       return { name, label, type, props }
