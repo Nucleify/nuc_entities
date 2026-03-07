@@ -8,7 +8,7 @@ import type {
   LoadingRefType,
   NucMoneyObjectInterface,
   StoreEntityRequestType,
-} from 'atomic'
+} from 'nucleify'
 
 export interface NucMoneyRequestsInterface {
   results: EntityResultsType<NucMoneyObjectInterface>

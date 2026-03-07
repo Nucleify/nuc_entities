@@ -7,13 +7,13 @@ import type {
   NucMoneyObjectInterface,
   NucMoneyRequestsInterface,
   UseLoadingInterface,
-} from 'atomic'
+} from 'nucleify'
 import {
   apiHandle,
   sessionStorageGetItem,
   useApiSuccess,
   useLoading,
-} from 'atomic'
+} from 'nucleify'
 
 export function moneyRequests(
   close?: CloseDialogType

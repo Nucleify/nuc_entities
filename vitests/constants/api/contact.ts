@@ -1,4 +1,4 @@
-import type { NucContactObjectInterface } from 'atomic'
+import type { NucContactObjectInterface } from 'nucleify'
 
 export const mockContact: NucContactObjectInterface = {
   id: 999999,

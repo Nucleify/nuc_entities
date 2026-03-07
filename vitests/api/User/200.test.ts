@@ -1,16 +1,16 @@
 import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest'
 
-import * as atomic from 'atomic'
+import * as nucleify from 'nucleify'
 
 describe('userRequests', (): void => {
-  const { closeDialog } = atomic.useNucDialog()
-  const requests: atomic.NucUserRequestsInterface =
-    atomic.userRequests(closeDialog)
-  const mockResponse = [atomic.mockUser]
+  const { closeDialog } = nucleify.useNucDialog()
+  const requests: nucleify.NucUserRequestsInterface =
+    nucleify.userRequests(closeDialog)
+  const mockResponse = [nucleify.mockUser]
 
   beforeEach((): void => {
     vi.clearAllMocks()
-    atomic.mockGlobalFetch(vi, mockResponse)
+    nucleify.mockGlobalFetch(vi, mockResponse)
   })
 
   it('getAllUsers', async (): Promise<void> => {
@@ -25,7 +25,7 @@ describe('userRequests', (): void => {
   })
 
   it('storeUser', async (): Promise<void> => {
-    await requests.storeUser(atomic.mockUser)
+    await requests.storeUser(nucleify.mockUser)
     expect(
       (globalThis as unknown as { $fetch: Mock }).$fetch
     ).toHaveBeenCalledWith(
@@ -36,7 +36,7 @@ describe('userRequests', (): void => {
   })
 
   it('editUser', async (): Promise<void> => {
-    await requests.editUser(atomic.mockUser)
+    await requests.editUser(nucleify.mockUser)
     expect(
       (globalThis as unknown as { $fetch: Mock }).$fetch
     ).toHaveBeenCalledWith(
@@ -47,7 +47,7 @@ describe('userRequests', (): void => {
   })
 
   it('deleteUser', async (): Promise<void> => {
-    await requests.deleteUser(atomic.mockUser.id ?? 0)
+    await requests.deleteUser(nucleify.mockUser.id ?? 0)
     expect(
       (globalThis as unknown as { $fetch: Mock }).$fetch
     ).toHaveBeenCalledWith(

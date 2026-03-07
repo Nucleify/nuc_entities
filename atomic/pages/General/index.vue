@@ -39,8 +39,8 @@
 import { useRoute } from 'nuxt/app'
 import { useI18n } from 'vue-i18n'
 
-import type { TileInterface } from 'atomic'
-import { articleRequests, contactRequests, moneyRequests } from 'atomic'
+import type { TileInterface } from 'nucleify'
+import { articleRequests, contactRequests, moneyRequests } from 'nucleify'
 
 const route = useRoute()
 const { t } = useI18n()

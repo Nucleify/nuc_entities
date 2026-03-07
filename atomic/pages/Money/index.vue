@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 
-import { moneyRequests, useNucDialog } from 'atomic'
+import { moneyRequests, useNucDialog } from 'nucleify'
 
 const { closeDialog } = useNucDialog()
 

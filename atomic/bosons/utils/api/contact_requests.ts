@@ -7,13 +7,13 @@ import type {
   NucContactObjectInterface,
   NucContactRequestsInterface,
   UseLoadingInterface,
-} from 'atomic'
+} from 'nucleify'
 import {
   apiHandle,
   sessionStorageGetItem,
   useApiSuccess,
   useLoading,
-} from 'atomic'
+} from 'nucleify'
 
 export function contactRequests(
   close?: CloseDialogType

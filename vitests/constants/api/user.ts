@@ -1,4 +1,4 @@
-import type { NucUserObjectInterface } from 'atomic'
+import type { NucUserObjectInterface } from 'nucleify'
 
 export const mockUser: NucUserObjectInterface = {
   id: 999999,

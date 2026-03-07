@@ -1,4 +1,4 @@
-import type { NucArticleObjectInterface } from 'atomic'
+import type { NucArticleObjectInterface } from 'nucleify'
 
 export const mockArticle: NucArticleObjectInterface = {
   id: 999999,

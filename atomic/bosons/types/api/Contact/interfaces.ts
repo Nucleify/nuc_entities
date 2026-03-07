@@ -8,7 +8,7 @@ import type {
   LoadingRefType,
   NucContactObjectInterface,
   StoreEntityRequestType,
-} from 'atomic'
+} from 'nucleify'
 
 export interface NucContactRequestsInterface {
   results: EntityResultsType<NucContactObjectInterface>

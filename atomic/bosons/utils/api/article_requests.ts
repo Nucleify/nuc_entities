@@ -7,13 +7,13 @@ import type {
   NucArticleObjectInterface,
   NucArticleRequestsInterface,
   UseLoadingInterface,
-} from 'atomic'
+} from 'nucleify'
 import {
   apiHandle,
   sessionStorageGetItem,
   useApiSuccess,
   useLoading,
-} from 'atomic'
+} from 'nucleify'
 
 export function articleRequests(
   close?: CloseDialogType

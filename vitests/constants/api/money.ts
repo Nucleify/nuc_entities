@@ -1,4 +1,4 @@
-import type { NucMoneyObjectInterface } from 'atomic'
+import type { NucMoneyObjectInterface } from 'nucleify'
 
 export const mockMoney: NucMoneyObjectInterface = {
   id: 999999,
