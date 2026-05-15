@@ -29,11 +29,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import type { NucDashboardInterface } from 'nucleify'
-import { moneyRequests, useMoneyFields, useNucDialog } from 'nucleify'
+import {
+  moneyRequests,
+  onShareEntityAccepted,
+  useMoneyFields,
+  useNucDialog,
+} from 'nucleify'
 
 const props = defineProps<NucDashboardInterface>()
 const { t } = useI18n()
@@ -95,4 +100,17 @@ const dialogs = computed(() => [
     fields: createAndEditFields,
   },
 ])
+
+let unsubscribeShareRefresh: (() => void) | undefined
+
+onMounted(() => {
+  unsubscribeShareRefresh = onShareEntityAccepted(({ entityType }) => {
+    if (entityType === 'money')
+      void Promise.resolve(props.getData?.()).catch(() => undefined)
+  })
+})
+
+onUnmounted(() => {
+  unsubscribeShareRefresh?.()
+})
 </script>
