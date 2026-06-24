@@ -1,105 +1,54 @@
-import { ref } from 'vue'
+'use client'
 
 import type {
+  AppFramework,
   CloseDialogType,
-  EntityCountResultsType,
-  EntityResultsType,
   NucArticleObjectInterface,
   NucArticleRequestsInterface,
   UseLoadingInterface,
 } from 'nucleify'
 import {
-  apiHandle,
+  createEntityRequestState,
+  createEntityRequestsCore,
   sessionStorageGetItem,
   useApiSuccess,
   useLoading,
 } from 'nucleify'
 
+const ARTICLES_URL = '/articles'
+
 export function articleRequests(
-  close?: CloseDialogType
+  close?: CloseDialogType,
+  framework: AppFramework = 'nuxt'
 ): NucArticleRequestsInterface {
-  const results: EntityResultsType<NucArticleObjectInterface> = ref([])
-  const createdLastWeek: EntityCountResultsType = ref(0)
+  const { results, createdLastWeek, setResults, setCreatedLastWeek } =
+    createEntityRequestState<NucArticleObjectInterface>(framework)
 
   const { loading, setLoading }: UseLoadingInterface = useLoading()
   const { apiSuccess } = useApiSuccess()
 
-  async function getAllArticles(loading?: boolean): Promise<void> {
-    await apiHandle<NucArticleObjectInterface[]>({
-      url: apiUrl() + '/articles',
-      setLoading: loading ? setLoading : undefined,
-      onSuccess: (response: NucArticleObjectInterface[]) => {
-        results.value = response
-      },
-    })
-  }
-
-  async function getCountArticlesByCreatedLastWeek(
-    loading?: boolean
-  ): Promise<void> {
-    await apiHandle<number>({
-      url: apiUrl() + '/articles/count-by-created-last-week',
-      setLoading: loading ? setLoading : undefined,
-      onSuccess: (response: number) => {
-        createdLastWeek.value = response
-      },
-    })
-  }
-
-  async function storeArticle(
-    data: NucArticleObjectInterface,
-    getData: () => Promise<void>
-  ): Promise<void> {
-    await apiHandle<NucArticleObjectInterface>({
-      url: apiUrl() + '/articles',
-      method: 'POST',
-      data: {
+  const { getAll, getCountByCreatedLastWeek, store, edit, remove } =
+    createEntityRequestsCore<NucArticleObjectInterface>({
+      baseUrl: ARTICLES_URL,
+      close,
+      apiSuccess,
+      setResults,
+      setCreatedLastWeek,
+      setLoading,
+      mapStoreData: (data) => ({
         user_id: sessionStorageGetItem('user_id'),
         ...data,
-      },
-      onSuccess: (response: NucArticleObjectInterface) => {
-        apiSuccess(response, getData, close, 'create')
-      },
+      }),
     })
-  }
-
-  async function editArticle(
-    data: NucArticleObjectInterface,
-    getData: () => Promise<void>
-  ): Promise<void> {
-    await apiHandle<NucArticleObjectInterface>({
-      url: apiUrl() + '/articles',
-      method: 'PUT',
-      data: data,
-      id: data.id,
-      onSuccess: (response: NucArticleObjectInterface) => {
-        apiSuccess(response, getData, close, 'edit')
-      },
-    })
-  }
-
-  async function deleteArticle(
-    id: number,
-    getData: () => Promise<void>
-  ): Promise<void> {
-    await apiHandle<NucArticleObjectInterface>({
-      url: apiUrl() + '/articles',
-      method: 'DELETE',
-      id,
-      onSuccess: (response: NucArticleObjectInterface) => {
-        apiSuccess(response, getData, close, 'delete')
-      },
-    })
-  }
 
   return {
     results,
     createdLastWeek,
     loading,
-    getAllArticles,
-    getCountArticlesByCreatedLastWeek,
-    storeArticle,
-    editArticle,
-    deleteArticle,
+    getAllArticles: getAll,
+    getCountArticlesByCreatedLastWeek: getCountByCreatedLastWeek,
+    storeArticle: store,
+    editArticle: edit,
+    deleteArticle: remove,
   }
 }

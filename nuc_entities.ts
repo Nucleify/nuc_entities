@@ -8,7 +8,7 @@ import {
   NucEntitiesPage,
   NucMoneyDashboard,
   NucMoneyPage,
-} from './atomic'
+} from 'nucleify'
 
 export function registerNucEntities(app: App<Element>): void {
   app

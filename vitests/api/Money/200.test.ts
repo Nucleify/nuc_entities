@@ -15,9 +15,7 @@ describe('moneyRequests', (): void => {
 
   it('getAllMoney', async (): Promise<void> => {
     await requests.getAllMoney()
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('money'),
       expect.objectContaining({ method: 'GET' })
     )
@@ -26,9 +24,7 @@ describe('moneyRequests', (): void => {
 
   it('storeMoney', async (): Promise<void> => {
     await requests.storeMoney(nucleify.mockMoney)
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('money'),
       expect.objectContaining({ method: 'POST' })
     )
@@ -37,9 +33,7 @@ describe('moneyRequests', (): void => {
 
   it('editMoney', async (): Promise<void> => {
     await requests.editMoney(nucleify.mockMoney)
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('money'),
       expect.objectContaining({ method: 'PUT' })
     )
@@ -48,9 +42,7 @@ describe('moneyRequests', (): void => {
 
   it('deleteMoney', async (): Promise<void> => {
     await requests.deleteMoney(nucleify.mockMoney.id ?? 0)
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('money'),
       expect.objectContaining({ method: 'DELETE' })
     )

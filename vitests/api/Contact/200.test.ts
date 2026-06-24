@@ -15,9 +15,7 @@ describe('contactRequests', (): void => {
 
   it('getAllContacts', async (): Promise<void> => {
     await requests.getAllContacts()
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('contacts'),
       expect.objectContaining({ method: 'GET' })
     )
@@ -26,9 +24,7 @@ describe('contactRequests', (): void => {
 
   it('storeContact', async (): Promise<void> => {
     await requests.storeContact(nucleify.mockContact)
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('contacts'),
       expect.objectContaining({ method: 'POST' })
     )
@@ -37,9 +33,7 @@ describe('contactRequests', (): void => {
 
   it('editContact', async (): Promise<void> => {
     await requests.editContact(nucleify.mockContact)
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('contacts'),
       expect.objectContaining({ method: 'PUT' })
     )
@@ -48,9 +42,7 @@ describe('contactRequests', (): void => {
 
   it('deleteContact', async (): Promise<void> => {
     await requests.deleteContact(nucleify.mockContact.id ?? 0)
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('contacts'),
       expect.objectContaining({ method: 'DELETE' })
     )

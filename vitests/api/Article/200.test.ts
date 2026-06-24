@@ -15,9 +15,7 @@ describe('articleRequests', (): void => {
 
   it('getAllArticles', async (): Promise<void> => {
     await requests.getAllArticles()
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('articles'),
       expect.objectContaining({ method: 'GET' })
     )
@@ -26,9 +24,7 @@ describe('articleRequests', (): void => {
 
   it('storeArticle', async (): Promise<void> => {
     await requests.storeArticle(nucleify.mockArticle)
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('articles'),
       expect.objectContaining({ method: 'POST' })
     )
@@ -37,9 +33,7 @@ describe('articleRequests', (): void => {
 
   it('editArticle', async (): Promise<void> => {
     await requests.editArticle(nucleify.mockArticle)
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('articles'),
       expect.objectContaining({ method: 'PUT' })
     )
@@ -48,9 +42,7 @@ describe('articleRequests', (): void => {
 
   it('deleteArticle', async (): Promise<void> => {
     await requests.deleteArticle(nucleify.mockArticle.id ?? 0)
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('articles'),
       expect.objectContaining({ method: 'DELETE' })
     )
