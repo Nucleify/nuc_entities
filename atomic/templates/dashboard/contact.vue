@@ -1,7 +1,7 @@
 <template>
   <section id="contacts">
     <nuc-entity-datatable-card
-      ad-type="contact"
+      nui-type="contact"
       :value="data"
       :loading="loading"
       :open-dialog="openDialog"

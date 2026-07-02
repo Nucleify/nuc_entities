@@ -102,7 +102,7 @@ const entities = computed<TileInterface[]>(() => [
     icon: 'prime:comment',
     countSecondary: articlesCreatedLastWeek.value,
     textSecondary: t('admin-tile-this-week'),
-    adType: 'article',
+    nuiType: 'article',
   },
   {
     href: `/${lang.value}/entities/contacts`,
@@ -111,7 +111,7 @@ const entities = computed<TileInterface[]>(() => [
     icon: 'prime:user',
     countSecondary: contactsCreatedLastWeek.value,
     textSecondary: t('admin-tile-this-week'),
-    adType: 'contact',
+    nuiType: 'contact',
   },
   {
     href: `/${lang.value}/entities/money`,
@@ -120,7 +120,7 @@ const entities = computed<TileInterface[]>(() => [
     icon: 'prime:dollar',
     countSecondary: moneyCreatedLastWeek.value,
     textSecondary: t('admin-tile-this-week'),
-    adType: 'money',
+    nuiType: 'money',
   },
 ])
 </script>

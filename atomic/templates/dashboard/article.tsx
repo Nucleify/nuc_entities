@@ -134,7 +134,7 @@ export function NucArticleDashboard({
   return (
     <section id="articles">
       <NucEntityDataTableCard
-        adType="article"
+        nuiType="article"
         value={safeData}
         loading={loading}
         openDialog={openDialog}

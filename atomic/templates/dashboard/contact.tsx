@@ -134,7 +134,7 @@ export function NucContactDashboard({
   return (
     <section id="contacts">
       <NucEntityDataTableCard
-        adType="contact"
+        nuiType="contact"
         value={safeData}
         loading={loading}
         openDialog={openDialog}

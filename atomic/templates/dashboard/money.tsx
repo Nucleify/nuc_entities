@@ -128,7 +128,7 @@ export function NucMoneyDashboard({
   return (
     <section id="money">
       <NucEntityDataTableCard
-        adType="money"
+        nuiType="money"
         value={safeData}
         loading={loading}
         openDialog={openDialog}

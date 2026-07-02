@@ -5,7 +5,7 @@
       :loading="loading"
       :open-dialog="openDialog"
       :tag="3"
-      ad-type="money"
+      nui-type="money"
       :header-text="t('entity-money-manage')"
       :button-text="t('entity-money-new')"
     />
