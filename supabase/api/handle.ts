@@ -1,29 +1,20 @@
-import { apiMethodNotAllowed, apiNotHandled, tryScopedCrud } from 'nuc_api'
+import {
+  apiMethodNotAllowed,
+  apiNotHandled,
+  dispatchAuthRoutes,
+  withGatewayUser,
+} from 'nuc_api'
 import type { ApiContext, ApiHandlerResult } from 'nuc_server'
 
-import {
-  ENTITY_TABLES,
-  entityFormatRow,
-  entityFormatRows,
-  entityPrepareCreateBody,
-  entityPrepareUpdateBody,
-} from './entities_helpers'
+import { entityRegistryRoutes } from './registry_routes'
 
 export async function handleEntitiesApi(
   ctx: ApiContext
 ): Promise<ApiHandlerResult> {
-  const table = ctx.segments[0]
-  if (!ENTITY_TABLES.has(table)) return apiNotHandled()
+  if (ctx.segments[0] !== 'entities') return apiNotHandled()
 
-  const result = await tryScopedCrud(ctx, {
-    table,
-    orderBy: { column: 'id', ascending: false },
-    formatRow: (row) => entityFormatRow(table, row),
-    formatRows: (rows) => entityFormatRows(table, rows),
-    prepareCreateBody: (body, scope) =>
-      entityPrepareCreateBody(table, body, scope),
-    prepareUpdateBody: (body) => entityPrepareUpdateBody(table, body),
+  return withGatewayUser(ctx, async (c, userId) => {
+    const result = await dispatchAuthRoutes(entityRegistryRoutes, c, userId)
+    return result ?? apiMethodNotAllowed()
   })
-
-  return result ?? apiMethodNotAllowed()
 }

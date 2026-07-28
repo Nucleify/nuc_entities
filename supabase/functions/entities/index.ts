@@ -20,7 +20,6 @@ serve(async (request) => {
   return json(501, {
     error: 'Not implemented',
     module: 'nuc_entities',
-    message:
-      'TODO: migrate Laravel backend logic to this Supabase Edge Function.',
+    message: 'Entity registry is served via the Nuxt/Next API gateway.',
   })
 })
